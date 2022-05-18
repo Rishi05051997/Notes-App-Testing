@@ -19,6 +19,9 @@ export const loginUser = async (email, password, setShowLoader, setLogin, userDi
             const { data: { foundUser, encodedToken } } = await axios({
                 method: 'post',
                 url: `/api/auth/login`,
+                headers: {
+                    accept: "*/*",
+                },
                 data: {
                     email, password
                 }
@@ -54,6 +57,9 @@ export const createUser = async (firstName, lastName, email, password, userDispa
             const { data } = await axios({
                 method: "post",
                 url: '/api/auth/signup',
+                headers: {
+                    accept: "*/*",
+                },
                 data: { email, password, firstName, lastName }
             })
             const { createdUser, encodedToken } = data;
