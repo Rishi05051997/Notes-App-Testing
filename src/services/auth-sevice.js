@@ -10,7 +10,7 @@ const isPasswordValid = (password) => {
 };
 
 export const loginUser = async (emailId, password, setShowLoader, setLogin, userDispatch, setShowMsg, setErrorMsg, navigate) => {
-    let email = emailId.defaultValue;
+    let email = emailId;
     if (!isPasswordValid(password)) {
         setErrorMsg("Password must contain at least 8 characters, at least 1 number and both lower and uppercase letters.")
         setShowMsg(true);
