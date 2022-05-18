@@ -1,0 +1,53 @@
+/*
+    Author: Vrushabh Dhatrak
+    Release: 0.1
+    Description : Utilities
+*/
+/*** Loader ****/
+.loader-container {
+    margin-top: 35rem;
+    margin-left: 85rem;
+}
+.modal {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 20;
+}
+
+body::-webkit-scrollbar {
+    width: 16px;
+}
+ 
+body::-webkit-scrollbar-track {
+    background-color: #e4e4e4;
+    border-radius: 4rem;
+}
+ 
+body::-webkit-scrollbar-thumb {
+    background-color: var(--primary-color);
+    border-radius: 4rem;
+}
+
+select {
+    width: 150px;
+    padding: 6px;
+    border: 0 !important;
+    background-color: lightblue;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    background-color: var(--primary-color);
+    background-size: .6em;
+    background-position: calc(100% - 1.3em) center;
+    background-repeat: no-repeat;
+}
+select::-ms-expand {
+    display: none;
+}
+
+.priority-round {
+    background-color: var(--primary-color);
+    border-radius: 5rem;
+}
