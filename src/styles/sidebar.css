@@ -65,7 +65,7 @@
     margin-left: 47.5rem;
     width: 70%;
     margin-top: 15rem;
-    margin-bottom: 2rem;
+    margin-bottom: -10rem;
     
 }
 .note-content {
@@ -106,8 +106,19 @@
 
 .content-nav > div {
     padding: 0 4rem;
+    border: 1px solid var(--primary-color);
+    border-radius:1rem;
+    margin: 0 1rem;
 }
-
+.content-nav > div:hover{
+    background-color: var(--primary-color);
+    color: var(--white-color);
+}
+.note-content .empty-note {
+    display: flex;
+    justify-content:center;
+    height: 80%;
+}
 
 /* ---- Collasped Sidebar --- */
 .sidebar.collapsed {
@@ -147,8 +158,8 @@
 }
 
 .note-main-content-collasped{
-      margin-left:17.5rem;
-      width: 80%;
-      margin-top: 15rem;
-      margin-bottom: 2rem;
+    margin-left:17.5rem;
+    width: 80%;
+    margin-top: 15rem;
+    margin-bottom: -10rem;
 }

@@ -1,14 +1,15 @@
 import "./App.css";
-import { Sidebar } from "./components/Note";
-import { useAuth } from "./context/AuthProvider";
+import { Toast } from "./components/Toast";
+import { useData } from "./context/DataProvider";
 import { Router } from "./Router/Router";
 import "./styles/main.css"
 
 function App() {
-  const { login } = useAuth();
+  const { state: { toastMsg } } = useData();
+
   return (
     <>
-      <Sidebar login={login} />
+      <div>{toastMsg && <Toast />}</div>
       < Router />
     </>
   );

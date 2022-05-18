@@ -30,24 +30,31 @@ body::-webkit-scrollbar-thumb {
     border-radius: 4rem;
 }
 
-select {
-    width: 150px;
-    padding: 6px;
-    border: 0 !important;
-    background-color: lightblue;
-    -webkit-appearance: none;
-    -moz-appearance: none;
-    appearance: none;
-    background-color: var(--primary-color);
-    background-size: .6em;
-    background-position: calc(100% - 1.3em) center;
-    background-repeat: no-repeat;
-}
-select::-ms-expand {
-    display: none;
+.bgRed {
+    background-color:rgb(231, 133, 133);
 }
 
-.priority-round {
-    background-color: var(--primary-color);
-    border-radius: 5rem;
+.bgGreen {
+    background-color:rgb(159, 217, 159);
+}
+
+.bgBlue {
+    background-color:rgb(174, 174, 239);
+}
+
+.bgYellow {
+    background-color:rgb(234, 234, 178);
+}
+
+.bgPurple {
+    background-color:rgb(233, 173, 233);
+}
+
+.bgPink {
+    background-color:rgb(187, 130, 152);
+}
+
+
+.card-footer {
+    align-items:baseline;
 }
