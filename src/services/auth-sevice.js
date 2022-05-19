@@ -28,7 +28,9 @@ export const loginUser = async (emailId, password, setShowLoader, setLogin, user
             //     }
             // })
             const loginData = { email, password }
-            const { data: { foundUser, encodedToken } } = await axios.post(`/api/auth/login`, loginData)
+            const { data } = await axios.post(`/api/auth/login`, loginData);
+            console.log(data)
+            const { foundUser, encodedToken } = data;
             if (foundUser && encodedToken) {
                 localStorage.setItem("token", encodedToken)
                 setLogin(foundUser);
