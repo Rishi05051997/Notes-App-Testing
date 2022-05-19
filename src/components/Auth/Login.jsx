@@ -41,13 +41,12 @@ export const Login = () => {
                     setLogin(foundUser);
                     localStorage.setItem("login", JSON.stringify(foundUser));
                     // userDispatch({ type: "CLEAR" });
-                    navigate("/note")
 
                 }
-                // setTimeout(() => {
-                //     setLoginCreds(initalLoginCreds);
-                //     navigate("/note")
-                // }, 1000)
+                setTimeout(() => {
+                    setLoginCreds(initalLoginCreds);
+                    navigate("/note")
+                }, 1000)
             }
             else {
                 throw new Error("Failure! Login failed.");
@@ -64,7 +63,7 @@ export const Login = () => {
 
         // userDispatch({ type: "SET-EMAIL", payload: "v@gmail.com" });
         // userDispatch({ type: "SET-PASSWORD", payload: "Vrushabh123" });
-
+        setLoginCreds(testLoginCreds);
         loginFormHandler(e, loginCreds)
     }
 
