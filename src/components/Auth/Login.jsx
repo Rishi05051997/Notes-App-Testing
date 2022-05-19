@@ -12,7 +12,7 @@ export const Login = () => {
     // }
     const { userState: { email, password }, userDispatch, loader, setLogin, showMsg, errorMsg } = useAuth();
     // const [loginCreds, setLoginCreds] = useState(initalLoginCreds);
-    const loginFormHandler = async (e, loginCreds) => {
+    const loginFormHandler = async (e, email, password) => {
         e.preventDefault();
         debugger;
         // loginUser(email, password, navigate)
@@ -22,7 +22,7 @@ export const Login = () => {
         //     password: password
         // }))
         try {
-            const isLogin = await loginUser(loginCreds);
+            const isLogin = await loginUser(email, password);
 
             if (isLogin) {
                 // showToast('Login successful!', 'success');
@@ -59,7 +59,7 @@ export const Login = () => {
         userDispatch({ type: "SET-EMAIL", payload: "v@gmail.com" });
         userDispatch({ type: "SET-PASSWORD", payload: "Vrushabh123" });
 
-        loginFormHandler(e, { email, password })
+        loginFormHandler(e, email, password)
     }
 
     return loader ? (
@@ -69,7 +69,7 @@ export const Login = () => {
 
     ) : (
         <section className="form-section">
-            <form onSubmit={(e) => loginFormHandler(e, { email, password })} className="form container-card xxl-card-width pad-lg">
+            <form onSubmit={(e) => loginFormHandler(e, email, password)} className="form container-card xxl-card-width pad-lg">
                 <div className="head-2 highlightMainText bold">Login</div>
                 <div className="custom-input-one mar-y-4 login-input">
                     <input
