@@ -11,6 +11,13 @@ export const Login = () => {
         loginUser(email, password, setShowLoader, setLogin, userDispatch, setShowMsg, setErrorMsg, navigate)
     }
 
+    const testLoginFormHandler = async (e) => {
+        e.preventDefault();
+        userDispatch({ type: "SET-EMAIL", payload: "v@gmail.com" });
+        userDispatch({ type: "SET-PASSWORD", payload: "Vrushabh123" })
+        loginUser(email, password, setShowLoader, setLogin, userDispatch, setShowMsg, setErrorMsg, navigate)
+    }
+
     return loader ? (
         <div className="loader-container">
             <RotatingSquare ariaLabel="rotating-square" visible={true} color="#3b82f6" />
@@ -61,10 +68,7 @@ export const Login = () => {
                     {showMsg && <p className="highlightMainText">{errorMsg}</p>}
                 </div>
                 <div className="mar-y-3">
-                    <span className="btn btn-link head-4" onClick={() => {
-                        userDispatch({ type: "SET-EMAIL", payload: "v@gmail.com" });
-                        userDispatch({ type: "SET-PASSWORD", payload: "Vrushabh123" })
-                    }}>Add Test Credentials</span>
+                    <span className="btn btn-link head-4" onClick={(e) => testLoginFormHandler(e)}>Add Test Credentials</span>
                 </div>
                 <div className="text-2 mar-y-2">
                     Forgot Your Password ?
