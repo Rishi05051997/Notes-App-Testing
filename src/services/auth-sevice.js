@@ -92,7 +92,7 @@ export const loginUser = async (loginCreds) => {
 
     const loginUrl = '/api/auth/login';
     try {
-        const { data, status } = await axios.post(loginUrl, loginCreds);
+        const { data, status } = await axios.post('/api/auth/login', loginCreds);
         if (status === 200)
             return data;
         if (status === 500)
