@@ -90,7 +90,7 @@ import axios from "axios"
 export const loginUser = async (loginCreds) => {
     debugger;
 
-    const loginUrl = '/api/auth/login';
+    // const loginUrl = '/api/auth/login';
     try {
         const { data, status } = await axios.post('/api/auth/login', loginCreds);
         if (status === 200)
