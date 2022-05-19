@@ -2,27 +2,36 @@ import { useAuth } from "../../context/AuthProvider"
 import { loginUser } from "../../services";
 import { RotatingSquare } from "react-loader-spinner";
 import { useNavigate } from "react-router-dom"
-// import { useState } from "react";
+import { useState } from "react";
 
 export const Login = () => {
     const navigate = useNavigate();
-    // const initalLoginCreds = {
-    //     email: '',
-    //     password: ''
-    // }
-    const { userState: { email, password }, userDispatch, loader, setLogin, showMsg, errorMsg } = useAuth();
+    const initalLoginCreds = {
+        email: '',
+        password: ''
+    }
+    const testLoginCreds = {
+        email: "v@gmail.com",
+        password: "Vrushabh123"
+    };
+    const [loginCreds, setLoginCreds] = useState(initalLoginCreds);
+    const setLoginFields = (e) => {
+        const { value, name } = e.target;
+        setLoginCreds((login) => ({ ...login, [name]: value }));
+    }
+    const { loader, setLogin, showMsg, errorMsg } = useAuth();
     // const [loginCreds, setLoginCreds] = useState(initalLoginCreds);
-    const loginFormHandler = async (e, email, password) => {
+    const loginFormHandler = async (e, loginCreds) => {
         e.preventDefault();
         debugger;
-        // loginUser(email, password, navigate)
+        // loginUser(loginCreds, navigate)
         // setLoginCreds((cred) => ({
         //     ...cred,
         //     email: email,
         //     password: password
         // }))
         try {
-            const isLogin = await loginUser(email, password);
+            const isLogin = await loginUser(loginCreds);
 
             if (isLogin) {
                 // showToast('Login successful!', 'success');
@@ -31,7 +40,7 @@ export const Login = () => {
                     localStorage.setItem("token", encodedToken)
                     setLogin(foundUser);
                     localStorage.setItem("login", JSON.stringify(foundUser));
-                    userDispatch({ type: "CLEAR" });
+                    // userDispatch({ type: "CLEAR" });
                     navigate("/note")
 
                 }
@@ -48,18 +57,15 @@ export const Login = () => {
             console.log(error.message);
         }
     }
-    // const testLoginCreds = {
-    //     email: "v@gmail.com",
-    //     password: "Vrushabh123"
-    // };
 
-    const testLoginFormHandler = async (e) => {
+
+    const testLoginFormHandler = async (e, loginCreds) => {
         e.preventDefault();
 
-        userDispatch({ type: "SET-EMAIL", payload: "v@gmail.com" });
-        userDispatch({ type: "SET-PASSWORD", payload: "Vrushabh123" });
+        // userDispatch({ type: "SET-EMAIL", payload: "v@gmail.com" });
+        // userDispatch({ type: "SET-PASSWORD", payload: "Vrushabh123" });
 
-        loginFormHandler(e, email, password)
+        loginFormHandler(e, loginCreds)
     }
 
     return loader ? (
@@ -69,7 +75,7 @@ export const Login = () => {
 
     ) : (
         <section className="form-section">
-            <form onSubmit={(e) => loginFormHandler(e, email, password)} className="form container-card xxl-card-width pad-lg">
+            <form onSubmit={(e) => loginFormHandler(e, loginCreds)} className="form container-card xxl-card-width pad-lg">
                 <div className="head-2 highlightMainText bold">Login</div>
                 <div className="custom-input-one mar-y-4 login-input">
                     <input
@@ -78,8 +84,8 @@ export const Login = () => {
                         className="input-field"
                         autoComplete="off"
                         placeholder=" "
-                        value={email}
-                        onChange={(e) => userDispatch({ type: "SET-EMAIL", payload: e.target.value })}
+                        value={loginCreds.email}
+                        onChange={(e) => setLoginFields(e)}
                     />
                     <label htmlFor="email" className="input-label text-2"
                     >Enter Your Email Id Here</label
@@ -92,8 +98,8 @@ export const Login = () => {
                         className="input-field"
                         autoComplete="off"
                         placeholder=" "
-                        value={password}
-                        onChange={(e) => userDispatch({ type: "SET-PASSWORD", payload: e.target.value })}
+                        value={loginCreds.password}
+                        onChange={(e) => setLoginFields(e)}
                     />
                     <span
                         className="iconify icons text-2"
@@ -112,7 +118,7 @@ export const Login = () => {
                     {showMsg && <p className="highlightMainText">{errorMsg}</p>}
                 </div>
                 <div className="mar-y-3">
-                    <span className="btn btn-link head-4" onClick={(e) => testLoginFormHandler(e)}>Add Test Credentials</span>
+                    <span className="btn btn-link head-4" onClick={(e) => testLoginFormHandler(e, testLoginCreds)}>Add Test Credentials</span>
                 </div>
                 <div className="text-2 mar-y-2">
                     Forgot Your Password ?
