@@ -17,16 +17,18 @@ export const loginUser = async (emailId, password, setShowLoader, setLogin, user
     } else {
         try {
             setShowLoader(true)
-            const { data: { foundUser, encodedToken } } = await axios({
-                method: 'post',
-                url: `/api/auth/login`,
-                headers: {
-                    accept: "*/*",
-                },
-                data: {
-                    email, password
-                }
-            })
+            // const { data: { foundUser, encodedToken } } = await axios({
+            //     method: 'post',
+            //     url: `/api/auth/login`,
+            //     headers: {
+            //         accept: "*/*",
+            //     },
+            //     data: {
+            //         email, password
+            //     }
+            // })
+            const loginData = { email, password }
+            const { data: { foundUser, encodedToken } } = await axios.post(`/api/auth/login`, loginData)
             if (foundUser && encodedToken) {
                 localStorage.setItem("token", encodedToken)
                 setLogin(foundUser);
