@@ -87,7 +87,7 @@ import axios from "axios"
 
 
 
-export const loginUser = async (loginCreds) => {
+const loginUser = async (loginCreds) => {
     debugger;
 
     // const loginUrl = '/api/auth/login';
@@ -106,7 +106,7 @@ export const loginUser = async (loginCreds) => {
 
 }
 
-export const createUser = async (signupCreds) => {
+const createUser = async (signupCreds) => {
     const signupUrl = '/api/auth/signup';
     try {
         const { data, status } = await axios.post(signupUrl, signupCreds);
@@ -124,8 +124,10 @@ export const createUser = async (signupCreds) => {
 
 
 
-export const logOutUser = (setLogin, navigate) => {
+const logOutUser = (setLogin, navigate) => {
     setLogin(false);
     localStorage.clear();
     navigate("/");
 };
+
+export { loginUser, createUser, logOutUser }
