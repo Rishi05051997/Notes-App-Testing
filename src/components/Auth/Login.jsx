@@ -2,26 +2,64 @@ import { useAuth } from "../../context/AuthProvider"
 import { loginUser } from "../../services";
 import { RotatingSquare } from "react-loader-spinner";
 import { useNavigate } from "react-router-dom"
+// import { useState } from "react";
 
 export const Login = () => {
     const navigate = useNavigate();
-    const { userState: { email, password }, userDispatch, loader, setShowLoader, setLogin, showMsg, setShowMsg, errorMsg, setErrorMsg } = useAuth();
-    const loginFormHandler = (e) => {
-        e.preventDefault()
-        loginUser(email, password, setShowLoader, setLogin, userDispatch, setShowMsg, setErrorMsg, navigate)
-    }
-    const testLoginCreds = {
-        email: "v@gmail.com",
-        password: "Vrushabh123"
-    };
-
-    const testLoginFormHandler = async (e, testLoginCreds) => {
+    // const initalLoginCreds = {
+    //     email: '',
+    //     password: ''
+    // }
+    const { userState: { email, password }, userDispatch, loader, setLogin, showMsg, errorMsg } = useAuth();
+    // const [loginCreds, setLoginCreds] = useState(initalLoginCreds);
+    const loginFormHandler = async (e, loginCreds) => {
         e.preventDefault();
-        const { email, password } = testLoginCreds
-        // userDispatch({ type: "SET-EMAIL", payload: email });
-        // userDispatch({ type: "SET-PASSWORD", payload: password });
+        debugger;
+        // loginUser(email, password, navigate)
+        // setLoginCreds((cred) => ({
+        //     ...cred,
+        //     email: email,
+        //     password: password
+        // }))
+        try {
+            const isLogin = await loginUser(loginCreds);
 
-        await loginUser(email, password, setShowLoader, setLogin, userDispatch, setShowMsg, setErrorMsg, navigate)
+            if (isLogin) {
+                // showToast('Login successful!', 'success');
+                const { encodedToken, foundUser } = isLogin;
+                if (foundUser && encodedToken) {
+                    localStorage.setItem("token", encodedToken)
+                    setLogin(foundUser);
+                    localStorage.setItem("login", JSON.stringify(foundUser));
+                    userDispatch({ type: "CLEAR" });
+                    navigate("/note")
+
+                }
+                // setTimeout(() => {
+                //     setLoginCreds(initalLoginCreds);
+                //     navigate("/note")
+                // }, 1000)
+            }
+            else {
+                throw new Error("Failure! Login failed.");
+            }
+
+        } catch (error) {
+            console.log(error.message);
+        }
+    }
+    // const testLoginCreds = {
+    //     email: "v@gmail.com",
+    //     password: "Vrushabh123"
+    // };
+
+    const testLoginFormHandler = async (e) => {
+        e.preventDefault();
+
+        userDispatch({ type: "SET-EMAIL", payload: "v@gmail.com" });
+        userDispatch({ type: "SET-PASSWORD", payload: "Vrushabh123" });
+
+        loginFormHandler(e, { email, password })
     }
 
     return loader ? (
@@ -31,7 +69,7 @@ export const Login = () => {
 
     ) : (
         <section className="form-section">
-            <form onSubmit={loginFormHandler} className="form container-card xxl-card-width pad-lg">
+            <form onSubmit={(e) => loginFormHandler(e, { email, password })} className="form container-card xxl-card-width pad-lg">
                 <div className="head-2 highlightMainText bold">Login</div>
                 <div className="custom-input-one mar-y-4 login-input">
                     <input
@@ -74,7 +112,7 @@ export const Login = () => {
                     {showMsg && <p className="highlightMainText">{errorMsg}</p>}
                 </div>
                 <div className="mar-y-3">
-                    <span className="btn btn-link head-4" onClick={(e) => testLoginFormHandler(e, testLoginCreds)}>Add Test Credentials</span>
+                    <span className="btn btn-link head-4" onClick={(e) => testLoginFormHandler(e)}>Add Test Credentials</span>
                 </div>
                 <div className="text-2 mar-y-2">
                     Forgot Your Password ?
