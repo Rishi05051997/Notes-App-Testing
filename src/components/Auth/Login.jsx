@@ -10,11 +10,17 @@ export const Login = () => {
         e.preventDefault()
         loginUser(email, password, setShowLoader, setLogin, userDispatch, setShowMsg, setErrorMsg, navigate)
     }
+    const testLoginCreds = {
+        email: "v@gmail.com",
+        password: "Vrushabh123"
+    };
 
-    const testLoginFormHandler = async (e) => {
+    const testLoginFormHandler = async (e, testLoginCreds) => {
         e.preventDefault();
-        userDispatch({ type: "SET-EMAIL", payload: "v@gmail.com" });
-        userDispatch({ type: "SET-PASSWORD", payload: "Vrushabh123" })
+        const { email, password } = testLoginCreds
+        // userDispatch({ type: "SET-EMAIL", payload: email });
+        // userDispatch({ type: "SET-PASSWORD", payload: password });
+
         loginUser(email, password, setShowLoader, setLogin, userDispatch, setShowMsg, setErrorMsg, navigate)
     }
 
@@ -68,7 +74,7 @@ export const Login = () => {
                     {showMsg && <p className="highlightMainText">{errorMsg}</p>}
                 </div>
                 <div className="mar-y-3">
-                    <span className="btn btn-link head-4" onClick={(e) => testLoginFormHandler(e)}>Add Test Credentials</span>
+                    <span className="btn btn-link head-4" onClick={(e) => testLoginFormHandler(e, testLoginCreds)}>Add Test Credentials</span>
                 </div>
                 <div className="text-2 mar-y-2">
                     Forgot Your Password ?
