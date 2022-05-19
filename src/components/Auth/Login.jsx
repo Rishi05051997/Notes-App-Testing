@@ -21,7 +21,7 @@ export const Login = () => {
         // userDispatch({ type: "SET-EMAIL", payload: email });
         // userDispatch({ type: "SET-PASSWORD", payload: password });
 
-        loginUser(email, password, setShowLoader, setLogin, userDispatch, setShowMsg, setErrorMsg, navigate)
+        await loginUser(email, password, setShowLoader, setLogin, userDispatch, setShowMsg, setErrorMsg, navigate)
     }
 
     return loader ? (
