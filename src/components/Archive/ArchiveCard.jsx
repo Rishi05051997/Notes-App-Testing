@@ -1,8 +1,7 @@
 import ReactQuill from "react-quill";
-import { useNavigate } from "react-router-dom"
 import { Icon } from "@iconify/react"
 import { useData } from "../../context/DataProvider";
-import { deleteArchiveNoteById, MoveToTrash, updateArchive } from "../../services";
+import { deleteArchiveNoteById, updateArchive } from "../../services";
 // import { deleteLableHandler } from "../../services";
 // import Select from 'react-select';
 
@@ -12,7 +11,6 @@ export const ArchiveCard = ({ archive }) => {
     const { _id, title, enteredNotes, bgColor, selectedPriority } = archive;
     const token = JSON.parse(localStorage.getItem("token"));
     const { dispatch } = useData();
-    const navigate = useNavigate();
 
     return (
         <div className={`container-card xxl-card-width ${bgColor} mar-md`}>

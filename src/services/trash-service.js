@@ -1,5 +1,4 @@
 import axios from "axios"
-import { deleteArchiveNoteById } from "./archive-service";
 
 export const MoveFromTrashToArchive = async (dispatch, _id, token, navigate) => {
     debugger;
@@ -15,18 +14,16 @@ export const MoveFromTrashToArchive = async (dispatch, _id, token, navigate) => 
     }
 }
 
-export const deleteNoteFromTrashById = async (dispatch, _id, note, token) => {
+export const deleteNoteFromTrashById = async (dispatch, _id, token) => {
     debugger;
     try {
-        const { data: { archives } } = await axios({
-            url: `/api/archives/delete/${_id}`,
+        const { data: { trash } } = await axios({
+            url: `/api/trash/delete/${_id}`,
             method: 'delete',
             headers: { authorization: token }
         })
-        if (archives) {
-            dispatch({ type: "DELETE-FROM-TRASH", payload: _id })
-            return archives;
-        }
+        debugger;
+        dispatch({ type: "DELETE-FROM-TRASH", payload: trash })
     } catch (error) {
         dispatch({ type: "SHOW_TOAST", payload: "Something went Wrong in deleting note from Trash" });
     }

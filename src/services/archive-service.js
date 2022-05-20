@@ -1,5 +1,4 @@
-import axios from "axios"
-import { deleteNoteById } from "./notes-service"
+import axios from "axios";
 
 export const getArchiveNoteByUser = async (token) => {
     try {

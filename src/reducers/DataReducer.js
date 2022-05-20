@@ -57,7 +57,7 @@ export const DataReducer = (state, action) => {
         case "MOVE-FROM-ARCHIVE-TO-NOTE":
             return {
                 ...state,
-                toastMsg: ` note is moving from archive to the notes`,
+                toastMsg: ` Note is moving from archive to the notes`,
                 notes: [...state.notes].concat(action.payload)
             }
 
@@ -67,17 +67,18 @@ export const DataReducer = (state, action) => {
         case "MOVE-From-TRASH-TO-ARCHIVE":
             return {
                 ...state,
-                toastMsg: ` note is moving from Trash to the Archive Bin`,
+                toastMsg: ` Note is moving from Trash to the Archive Bin`,
                 notes: action.payload.notes,
                 archives: action.payload.archives,
                 trash: action.payload.trash
             }
 
         case "DELETE-FROM-TRASH":
+            console.log(action.payload)
             return {
                 ...state,
-                toastMsg: `note deleted from Trash Successfully`,
-                trash: [...state.trash].filter(({ _id }) => _id !== action.payload)
+                toastMsg: `Note deleted from Trash Successfully`,
+                trash: action.payload
             }
 
         case "Move-From-Trash-To-Note":
