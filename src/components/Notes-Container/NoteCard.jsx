@@ -16,7 +16,6 @@ const priority = ["Please Select Priority", "High", "Medium", "Low"]
 
 export const NotesCard = ({ note }) => {
     const { _id, title, enteredNotes, bgColor, selectedPriority } = note;
-    const token = JSON.parse(localStorage.getItem("token"));
     const { dispatch } = useData();
     const navigate = useNavigate();
     const [isEditable, setIsEditable] = useState(false);
