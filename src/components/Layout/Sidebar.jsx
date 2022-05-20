@@ -2,7 +2,6 @@ import { Icon } from "@iconify/react"
 import { Link, useNavigate } from "react-router-dom"
 import { useAuth } from "../../context/AuthProvider";
 import { useData } from "../../context/DataProvider";
-import { logOutUser } from "../../services";
 import { AddNote } from "../NoteForm/AddNote";
 import { useState } from "react";
 import { AddLabel } from "../AddLabelForm/AddLabel";
@@ -12,7 +11,7 @@ import { AddLabel } from "../AddLabelForm/AddLabel";
 export const Sidebar = ({ login }) => {
     const { state: { isPinned }, isExpanded, setIsExpanded, dispatch } = useData();
     const navigate = useNavigate();
-    const { setLogin } = useAuth();
+    const { setAuth } = useAuth();
     const [isAddNote, setIsAddNote] = useState(false);
     const [isAddLabel, setIsAddLabel] = useState(false)
     const { firstName } = JSON.parse(localStorage.getItem("user"))
@@ -27,6 +26,15 @@ export const Sidebar = ({ login }) => {
         localStorage.removeItem("sidebar-collasped");
     }
 
+    const logoutUser = () => {
+        setAuth({
+            isAuth: false,
+            token: '',
+            user: {}
+        });
+        localStorage.clear();
+        navigate('/');
+    }
 
     return login && (
         <>
@@ -75,7 +83,7 @@ export const Sidebar = ({ login }) => {
                             <div className="sidebar-icon text-4">
                                 <Icon className="iconify" icon="mdi-light:logout" />
                             </div>
-                            <span className="sidebar-text text-4" onClick={() => logOutUser(setLogin, navigate)}>Logout</span>
+                            <span className="sidebar-text text-4" onClick={() => logoutUser()}>Logout</span>
                         </div>
                     </main>
                 </div>
