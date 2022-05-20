@@ -2,12 +2,11 @@ import { Icon } from "@iconify/react"
 import { Link, useNavigate } from "react-router-dom"
 import { useAuth } from "../../context/AuthProvider";
 import { useData } from "../../context/DataProvider";
-import { logOutUser } from "../../services";
 import { AddNote } from "./AddNote";
 export const Sidebar = ({ login }) => {
     const { state: { isModelOpen }, dispatch, isExpanded, setIsExpanded } = useData();
     const navigate = useNavigate();
-    const { setLogin } = useAuth();
+    const { setAuth } = useAuth();
 
     const handleToggler = () => {
         if (isExpanded) {
@@ -17,6 +16,15 @@ export const Sidebar = ({ login }) => {
         }
         setIsExpanded(true);
         localStorage.removeItem("sidebar-collasped");
+    }
+    const logoutUser = () => {
+        setAuth({
+            isAuth: false,
+            token: '',
+            user: {}
+        });
+        localStorage.clear();
+        navigate('/');
     }
 
     return login && (
@@ -65,7 +73,7 @@ export const Sidebar = ({ login }) => {
                             <div className="sidebar-icon text-3">
                                 <Icon className="iconify" icon="ant-design:home-filled" />
                             </div>
-                            <span className="sidebar-text text-3" onClick={() => logOutUser(setLogin, navigate)}>Logout</span>
+                            <span className="sidebar-text text-3" onClick={() => logoutUser()}>Logout</span>
                         </div>
                     </main>
                 </div>
