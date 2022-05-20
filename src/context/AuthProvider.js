@@ -1,27 +1,29 @@
-import { useContext, createContext, useReducer, useState } from "react";
-import { AuthReducer } from "../reducers/AuthReducer";
+import { useContext, createContext, useEffect, useState } from "react";
 
-const intialState = {
-    firstName: "",
-    lastName: "",
-    email: "",
-    password: ""
-}
 
-const authContext = createContext(intialState);
+const authContext = createContext();
 
 
 
 const AuthProvider = ({ children }) => {
-    const [userState, userDispatch] = useReducer(AuthReducer, intialState);
+    const [auth, setAuth] = useState({
+        token: '',
+        user: {},
+        isAuth: false
+    });
     const [loader, setShowLoader] = useState();
-    const [login, setLogin] = useState(JSON.parse(localStorage.getItem("login")) || false);
     const [showMsg, setShowMsg] = useState(false);
     const [errorMsg, setErrorMsg] = useState("");
-
+    useEffect(() => {
+        setAuth({
+            token: JSON.parse(localStorage.getItem("token")),
+            user: JSON.parse(localStorage.getItem("user")),
+            isAuth: localStorage.getItem("isAuth")
+        })
+    }, []);
     return (
         <>
-            <authContext.Provider value={{ userState, userDispatch, loader, setShowLoader, login, setLogin, showMsg, setShowMsg, errorMsg, setErrorMsg }}>
+            <authContext.Provider value={{ auth, setAuth, loader, setShowLoader, showMsg, setShowMsg, errorMsg, setErrorMsg }}>
                 {
                     children
                 }
@@ -31,4 +33,4 @@ const AuthProvider = ({ children }) => {
 
 const useAuth = () => useContext(authContext);
 
-export { useAuth, AuthProvider, intialState }
+export { useAuth, AuthProvider }

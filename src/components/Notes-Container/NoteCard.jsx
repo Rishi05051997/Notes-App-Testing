@@ -16,7 +16,7 @@ const priority = ["Please Select Priority", "High", "Medium", "Low"]
 
 export const NotesCard = ({ note }) => {
     const { _id, title, enteredNotes, bgColor, selectedPriority } = note;
-    const token = localStorage.getItem("token");
+    const token = JSON.parse(localStorage.getItem("token"));
     const { dispatch } = useData();
     const navigate = useNavigate();
     const [isEditable, setIsEditable] = useState(false);
@@ -54,10 +54,13 @@ export const NotesCard = ({ note }) => {
                 </div>
                 <footer>
                     <div className="card-footer text-5 mar-xs pad-xs">
-                        <Icon className="iconify cursor_" icon="fluent:delete-28-regular" onClick={() => deleteNoteById(dispatch, token, _id)} />
+                        <Icon className="iconify cursor_" icon="fluent:delete-28-regular" onClick={(e) => {
+                            e.stopPropagation();
+                            deleteNoteById(dispatch, _id)
+                        }} />
                         < ColorContainer noteId={_id} note={note} />
                         < Selectbox options={priority} dispatch={dispatch} type="PRIORITY-UPDATE" noteId={_id} note={note} />
-                        <Icon className="iconify cursor_" icon="bxs:archive-in" onClick={() => ArchiveNoteById(dispatch, _id, note, token, navigate)} />
+                        <Icon className="iconify cursor_" icon="bxs:archive-in" onClick={() => ArchiveNoteById(dispatch, _id, note, JSON.parse(localStorage.getItem("token")), navigate)} />
                         <Icon className="iconify cursor_" icon="akar-icons:edit" onClick={() => setIsEditable(val => !val)} />
                         {/* <Select
                         closeMenuOnSelect={false}

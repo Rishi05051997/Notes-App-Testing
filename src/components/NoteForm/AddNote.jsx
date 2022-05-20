@@ -22,7 +22,6 @@ const modules = {
 const priority = ["Please Select Priority", "High", "Medium", "Low"]
 
 const intialState = {
-    _id: "",
     title: "",
     enteredNotes: "",
     isPinned: false,
@@ -43,8 +42,8 @@ export const AddNote = ({ isEditable, setIsEditable, setIsAddNote, editingNoteDa
             setErrorMsg("Note Title or Entered Note can not be empty!!!");
             setShowMsg(true);
         } else {
-            const token = localStorage.getItem("token");
-            const noteFinalData = { ...noteData, _id: Math.floor((Math.random() * 1000) + 1), }
+            const token = JSON.parse(localStorage.getItem("token"));
+            const noteFinalData = { ...noteData }
             isEditable ? updateNote(dispatch, token, noteFinalData._id, noteData) : addNote(noteFinalData, token, dispatch);
             isEditable ? setIsEditable((val) => !val) : setIsAddNote(val => !val);
         }

@@ -10,7 +10,7 @@ import { deleteArchiveNoteById, MoveToTrash, updateArchive } from "../../service
 
 export const ArchiveCard = ({ archive }) => {
     const { _id, title, enteredNotes, bgColor, selectedPriority } = archive;
-    const token = localStorage.getItem("token");
+    const token = JSON.parse(localStorage.getItem("token"));
     const { dispatch } = useData();
     const navigate = useNavigate();
 
@@ -43,7 +43,7 @@ export const ArchiveCard = ({ archive }) => {
                 <div className="card-footer text-5 mar-xs pad-xs">
                     <Icon className="iconify cursor_" icon="fluent:delete-28-regular" onClick={() => deleteArchiveNoteById(dispatch, _id, archive, token)} />
                     <Icon className="iconify cursor_" icon="bxs:archive-out" onClick={() => updateArchive(dispatch, _id, archive, token, "MOVE-TO-NOTE")} />
-                    <Icon className="iconify cursor_" icon="akar-icons:trash-bin" onClick={() => MoveToTrash(dispatch, _id, archive, token, navigate)} />
+
                     {
                         archive.isPinned ?
                             <Icon

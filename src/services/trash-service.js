@@ -1,22 +1,16 @@
 import axios from "axios"
 import { deleteArchiveNoteById } from "./archive-service";
 
-export const MoveToTrash = async (dispatch, _id, note, token, navigate) => {
+export const MoveFromTrashToArchive = async (dispatch, _id, token, navigate) => {
+    debugger;
     try {
-        const deleted = await deleteArchiveNoteById(dispatch, _id, note, token);
-        if (deleted) {
-            const { data: { archives } } = await axios({
-                url: `/api/archives/restore/${_id}`,
-                method: 'post',
-                headers: { authorization: token }
-            })
-            if (archives) {
-                dispatch({ type: "MOVE-TO-TRASH", payload: note });
-                navigate("/trash")
-            }
-        }
+
+        const { data: { archives, notes, trash } } = await axios.post(`/api/trash/restore/${_id}`, {}, { headers: { authorization: token } })
+        dispatch({ type: "MOVE-From-TRASH-TO-ARCHIVE", payload: { archives, notes, trash } });
+        navigate("/trash");
 
     } catch (error) {
+        console.error(error)
         dispatch({ type: "SHOW_TOAST", payload: "Something went Wrong in moving note to Trash" });
     }
 }

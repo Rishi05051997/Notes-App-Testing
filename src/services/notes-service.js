@@ -11,7 +11,7 @@ export const addNote = async (noteData, token, dispatch) => {
             headers: { authorization: token }
         })
         if (notes) {
-            dispatch({ type: "ADD-NOTE", payload: noteData })
+            dispatch({ type: "ADD-NOTE", payload: notes })
             dispatch({ type: "CLEAR-NOTE-FORM" })
 
         }
@@ -20,18 +20,13 @@ export const addNote = async (noteData, token, dispatch) => {
     }
 }
 
-export const deleteNoteById = async (dispatch, token, _id) => {
+export const deleteNoteById = async (dispatch, _id) => {
+    const token = JSON.parse(localStorage.getItem("token"));
     try {
-        const { data: { notes } } = await axios({
-            url: `/api/notes/${_id}`,
-            method: "delete",
-            headers: { authorization: token }
-        })
-        if (notes) {
-            dispatch({ type: "DELETE-NOTE", payload: _id })
-            return notes
-        }
+        const { data: { notes, trash } } = await axios.delete(`/api/notes/${_id}`, { headers: { authorization: token } });
+        dispatch({ type: "DELETE-NOTE", payload: { notes, trash } })
     } catch (error) {
+        console.error(error)
         dispatch({ type: "SHOW_TOAST", payload: "Something went Wrong in deleting note" });
     }
 }

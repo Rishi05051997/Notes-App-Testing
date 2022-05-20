@@ -8,7 +8,6 @@ export const Sidebar = ({ login }) => {
     const { state: { isModelOpen }, dispatch, isExpanded, setIsExpanded } = useData();
     const navigate = useNavigate();
     const { setLogin } = useAuth();
-    console.log(isModelOpen)
 
     const handleToggler = () => {
         if (isExpanded) {

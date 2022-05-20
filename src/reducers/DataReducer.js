@@ -17,21 +17,24 @@ export const DataReducer = (state, action) => {
             return {
                 ...state,
                 toastMsg: "New Note Added Successfully",
-                notes: [...state.notes].concat(action.payload)
+                notes: action.payload
             }
 
         case "DELETE-NOTE":
+            console.log(action.payload)
             return {
                 ...state,
                 toastMsg: `Note deleted Successfully`,
-                notes: [...state.notes].filter(({ _id }) => _id !== action.payload)
+                notes: action.payload.notes,
+                trash: action.payload.trash
             }
 
         case "UPDATE-NOTE":
             return {
                 ...state,
                 toastMsg: `Notes Updated Successfully`,
-                isEditable: true, notes: [...state.notes].map((note) => note._id === action.payload._id ? action.payload : note)
+                isEditable: true,
+                notes: [...state.notes].map((note) => note._id === action.payload._id ? action.payload : note)
             }
 
 
@@ -39,15 +42,16 @@ export const DataReducer = (state, action) => {
             return {
                 ...state,
                 toastMsg: ` note is moving to Archives`,
-                notes: [...state.notes].filter(({ _id }) => _id !== action.payload._id),
-                archives: [...state.archives].concat(action.payload)
+                notes: action.payload.notes,
+                archives: action.payload.archives
             }
 
         case "DELETE-FROM-ARCHIVE":
             return {
                 ...state,
                 toastMsg: ` note deleted from Archived`,
-                archives: [...state.archives].filter(({ _id }) => _id !== action.payload)
+                archives: action.payload.archives,
+                trash: action.payload.trash
             }
 
         case "MOVE-FROM-ARCHIVE-TO-NOTE":
@@ -60,12 +64,13 @@ export const DataReducer = (state, action) => {
         case "CLEAR-NOTE-FORM":
             return { ...state, intialStateValue }
 
-        case "MOVE-TO-TRASH":
+        case "MOVE-From-TRASH-TO-ARCHIVE":
             return {
                 ...state,
-                toastMsg: ` note is moving from Archived to the Trash Bin`,
-                archives: [...state.archives].filter(({ _id }) => _id !== action.payload),
-                trash: [...state.trash].concat(action.payload)
+                toastMsg: ` note is moving from Trash to the Archive Bin`,
+                notes: action.payload.notes,
+                archives: action.payload.archives,
+                trash: action.payload.trash
             }
 
         case "DELETE-FROM-TRASH":

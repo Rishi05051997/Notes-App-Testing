@@ -2,7 +2,7 @@ import ReactQuill from "react-quill";
 import { useNavigate } from "react-router-dom"
 import { Icon } from "@iconify/react"
 import { useData } from "../../context/DataProvider";
-import { deleteNoteFromTrashById, MoveFromTrashToNote } from "../../services";
+import { deleteNoteFromTrashById, MoveFromTrashToArchive, MoveFromTrashToNote, MoveToTrash } from "../../services";
 // import { deleteLableHandler } from "../../services";
 // import Select from 'react-select';
 
@@ -43,6 +43,7 @@ export const TrashCard = ({ trash }) => {
                 <div className="card-footer text-5 mar-xs pad-xs">
                     <Icon className="iconify cursor_" icon="fluent:delete-28-regular" onClick={() => deleteNoteFromTrashById(dispatch, _id, trash, token)} />
                     <Icon className="iconify cursor_" icon="bxs:archive-out" onClick={() => MoveFromTrashToNote(dispatch, _id, trash, token, navigate)} />
+                    <Icon className="iconify cursor_" icon="material-symbols:restore-from-trash" onClick={() => MoveFromTrashToArchive(dispatch, _id, token, navigate)} />
                     {
                         trash.isPinned ?
                             <Icon

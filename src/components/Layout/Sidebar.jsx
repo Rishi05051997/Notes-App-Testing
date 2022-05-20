@@ -15,7 +15,7 @@ export const Sidebar = ({ login }) => {
     const { setLogin } = useAuth();
     const [isAddNote, setIsAddNote] = useState(false);
     const [isAddLabel, setIsAddLabel] = useState(false)
-    const { firstName } = JSON.parse(localStorage.getItem("login"))
+    const { firstName } = JSON.parse(localStorage.getItem("user"))
 
     const handleToggler = () => {
         if (isExpanded) {

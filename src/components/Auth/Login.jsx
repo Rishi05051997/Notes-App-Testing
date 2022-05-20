@@ -19,7 +19,7 @@ export const Login = () => {
         const { value, name } = e.target;
         setLoginCreds((login) => ({ ...login, [name]: value }));
     }
-    const { loader, setLogin, showMsg, errorMsg } = useAuth();
+    const { setAuth, loader, showMsg, errorMsg } = useAuth();
     // const [loginCreds, setLoginCreds] = useState(initalLoginCreds);
     const loginFormHandler = async (e, loginCreds) => {
         e.preventDefault();
@@ -36,16 +36,17 @@ export const Login = () => {
             if (isLogin) {
                 // showToast('Login successful!', 'success');
                 const { encodedToken, foundUser } = isLogin;
-                if (foundUser && encodedToken) {
-                    localStorage.setItem("token", encodedToken)
-                    setLogin(foundUser);
-                    localStorage.setItem("login", JSON.stringify(foundUser));
-                    // userDispatch({ type: "CLEAR" });
-
-                }
+                setAuth(() => ({
+                    token: encodedToken,
+                    user: foundUser,
+                    isAuth: true
+                }));
+                localStorage.setItem("token", JSON.stringify(encodedToken));
+                localStorage.setItem("user", JSON.stringify(foundUser));
+                localStorage.setItem("isAuth", "true");
                 setTimeout(() => {
                     setLoginCreds(initalLoginCreds);
-                    navigate("/note")
+                    navigate('/note');
                 }, 1000)
             }
             else {
